@@ -18,29 +18,29 @@ public class TwitterManager {
 	public void performQuery(String inQuery) throws InterruptedException, IOException {
 		Query query = new Query(inQuery);
 		query.setCount(100);
-	try {
-		int count=0;
-		QueryResult r;
-		do {
-			r = twitter.search(query);
-			ArrayList ts= (ArrayList) r.getTweets();
+		try {
+			int count=0;
+			QueryResult r;
+			do {
+				r = twitter.search(query);
+				ArrayList ts= (ArrayList) r.getTweets();
 
-			for (int i = 0; i &lt; ts.size() &amp;&amp; count &lt; LIMIT; i++) {
-				count++;
-				Status t = ts.get(i);
-				String text = t.getText();
-				System.out.println("Text: " + text);
-				String name = t.getUser().getScreenName();
-				System.out.println("User: " + name);
-				String sent = sentClassifier.classify(t.getText());
-				System.out.println("Sentiment: " + sent); 
-			}   
-		} while ((query = r.nextQuery()) != null &amp;&amp; count &lt; LIMIT);
+				for (int i = 0; i &lt; ts.size() &amp;&amp; count &lt; LIMIT; i++) {
+					count++;
+					Status t = ts.get(i);
+					String text = t.getText();
+					System.out.println("Text: " + text);
+					String name = t.getUser().getScreenName();
+					System.out.println("User: " + name);
+					String sent = sentClassifier.classify(t.getText());
+					System.out.println("Sentiment: " + sent); 
+				}   
+			} while ((query = r.nextQuery()) != null &amp;&amp; count &lt; LIMIT);
+		}
+		
+		catch (TwitterException te) {
+			System.out.println("Couldn't connect: " + te);
+		}
 	}
-	
-	catch (TwitterException te) {
-		System.out.println("Couldn't connect: " + te);
-	}
- }
 
 }
