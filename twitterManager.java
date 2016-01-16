@@ -25,7 +25,7 @@ public class TwitterManager {
 				r = twitter.search(query);
 				ArrayList ts= (ArrayList) r.getTweets();
 
-				for (int i = 0; i &lt; ts.size() &amp;&amp; count &lt; LIMIT; i++) {
+				for (int i = 0; i < ts.size() && count < LIMIT; i++) {
 					count++;
 					Status t = ts.get(i);
 					String text = t.getText();
@@ -35,7 +35,7 @@ public class TwitterManager {
 					String sent = sentClassifier.classify(t.getText());
 					System.out.println("Sentiment: " + sent); 
 				}   
-			} while ((query = r.nextQuery()) != null &amp;&amp; count &lt; LIMIT);
+			} while ((query = r.nextQuery()) != null && count < LIMIT);
 		}
 		
 		catch (TwitterException te) {
